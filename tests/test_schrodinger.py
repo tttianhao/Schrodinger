@@ -4,22 +4,20 @@
 """Tests for `schrodinger` package."""
 
 import pytest
-
+import unittest
 
 from schrodinger import schrodinger
 
+class Testworkshop(unittest.TestCase):
 
-@pytest.fixture
-def response():
-    """Sample pytest fixture.
+    def test_parser(self):
+        '''
+        test the parser function
+        '''
+        args = schrodinger.getParser()
+        self.assertEquals(args.V0,1)
+        self.assertEquals(args.c,1)
+        self.assertEquals(args.size,5)
 
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
-
-
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
+if __name__ == '__main__':
+    unittest.main()

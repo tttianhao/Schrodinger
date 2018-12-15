@@ -25,7 +25,7 @@ def fourier(n):
     returns:
     fourier: function. the nth vector in the basis set '''
     if n == 0:
-        return lambda x: tf.constant(1,dtype=tf.float32)
+        return lambda x: tf.math.cos((n//2)*x)-tf.math.cos((n//2)*x)+1
     elif n % 2 == 1: #sinnx
         return lambda x: tf.math.sin(((n//2)+1)*x)
     return lambda x: tf.math.cos((n//2)*x) #cosnx
@@ -68,8 +68,48 @@ def inner_V0_b(potential, position, fourier):
         result = tf.concat([result,integral],0)
     return result
 
+def inner_V0hat_b(basis, position,basisn):
+    ''' This function evalutes the innver product of <V0hat, bn> where bn is the nth vector in the basis
+
+    Args:
+    basis: list, the basis set user chosen
+    position: tensor, the position input by user
+    basisn: the nth vector in the basis set
+
+    returns:
+    result: tensor, the matrix of coefficient of the system of equation used to solve basis vector coefficient
+    '''
+    for i in range(len(basis)):
+        coefficientij = tf.constant(tf.reduce_sum(basis[i](position)*tf.transpose(basisn(position))),shape=[1,])
+        try:
+            coefficienti
+        except NameError:
+            coefficienti = coefficientij
+        else:
+            coefficienti = tf.concat([coefficienti, coefficientij],0)
+    return tf.reshape(coefficienti,[len(basis),1])
+
+def coefficient_matrix(basis, position):
+    ''' This function evalutes the innver product of <V0hat, b> by numerical integration
+
+    Args:
+    basis: list, the basis set user chosen
+    position: tensor, the position input by user
+
+    returns:
+    result: tensor, the matrix of coefficient of the system of equation used to solve basis vector coefficient
+    '''
+    for i in basis:
+        coefficienti = inner_V0hat_b(basis, position, i)
+        try:
+            coefficient
+        except NameError:
+            coefficient = coefficienti
+        else:
+            coefficient = tf.concat([coefficient, coefficienti],1)
+    return coefficient
+
 def main():
-    print(1//2)
     args = getParser()
     n = args.size
     basis = []
@@ -79,6 +119,12 @@ def main():
     print('positions are ',position)
     print('potentials are ',potential)
     integration = inner_V0_b(potential,position,basis)
-    print(integration)
+    integration = tf.reshape(integration,[len(basis),1])
+    print('integration are ',integration)
+    coefficient = coefficient_matrix(basis,position)
+    print(coefficient)
+    solution = tf.linalg.solve(coefficient, integration)
+    print(solution)
+
 if __name__ == '__main__':
     main()

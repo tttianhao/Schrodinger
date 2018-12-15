@@ -109,6 +109,32 @@ def coefficient_matrix(basis, position):
             coefficient = tf.concat([coefficient, coefficienti],1)
     return coefficient
 
+def operator(c,n):
+    ''' This function construct the matrix form of the operator
+
+    Args:
+    c: float, the constant of user input
+    n: int, the number of desired basis set
+
+    returns:
+    matrix: tensor, the matrix form of the operator
+    '''
+    row_1 = tf.constant(tf.zeros(n),shape=(n,1),dtype=tf.float32)
+    for i in range(1,n):
+        start = True
+        for j in range(0,n):
+            if i!= j:
+                matrix_ij = tf.constant(0,dtype=tf.float32,shape=(1,))
+            else:
+                matrix_ij = tf.constant(c*((i+1)//2)**2,dtype=tf.float32,shape=(1,))
+            if start:
+                row_i = matrix_ij
+                start = False
+            else:
+                row_i = tf.concat([row_i, matrix_ij],0)
+        row_1 = tf.concat([row_1, tf.reshape(row_i,[5,1])],1)
+    return row_1
+
 def main():
     args = getParser()
     n = args.size
@@ -125,6 +151,8 @@ def main():
     print(coefficient)
     solution = tf.linalg.solve(coefficient, integration)
     print(solution)
+    matrix = operator(1,5)
+    print(matrix)
 
 if __name__ == '__main__':
     main()

@@ -10,7 +10,6 @@ def getParser():
     #Using parser to take in user in put form termial.
     #The default command is:
     parser = argparse.ArgumentParser()
-    parser.add_argument('--V0', type = float, default = 1, help = 'potential energy, defaul = 1' )
     parser.add_argument('--c', type = float, default = 1, help = 'constant c, default = 1' )
     parser.add_argument('--size', type = int, default = 5, help = 'size of the basis set, default = 5' )
     parser.add_argument('--file', type = str, default = 'schrodinger/potential_energy.dat', help = 'name of your potential energy file')
@@ -26,9 +25,9 @@ def fourier(n):
     returns:
     fourier: function. the nth vector in the basis set '''
     if n == 0:
-        return lambda x: tf.math.sin((n//2)*x) - tf.math.sin((n//2)*x) + 1
+        return lambda x: tf.constant(1,dtype=tf.float32)
     elif n % 2 == 1: #sinnx
-        return lambda x: tf.math.sin((n//2)*x)
+        return lambda x: tf.math.sin(((n//2)+1)*x)
     return lambda x: tf.math.cos((n//2)*x) #cosnx
 
 def read_file(name):
@@ -62,9 +61,7 @@ def inner_V0_b(potential, position, fourier):
     returns:
     result: tensor, the result of numerical integration'''
     result = tf.reduce_sum(fourier[0](position) * tf.transpose(potential))
-    print(result)
     result = tf.constant(result,shape=[1,])
-    print(result)
     for i in range(1,len(fourier)):
         integral = tf.reduce_sum(fourier[i](position) * tf.transpose(potential))
         integral = tf.constant(integral,shape=[1,])
@@ -72,6 +69,7 @@ def inner_V0_b(potential, position, fourier):
     return result
 
 def main():
+    print(1//2)
     args = getParser()
     n = args.size
     basis = []

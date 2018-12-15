@@ -153,25 +153,26 @@ def combine(V0, coeff, n):
     return H
 
 def main():
+    '''
+    Main function of the project
+    '''
     args = getParser()
-    n = args.size
     basis = []
-    for i in range(n):
+    for i in range(args.size):
         basis.append(fourier(i))
     potential, position = read_file(args.file)
     print('positions are ',position)
     print('potentials are ',potential)
     integration = inner_V0_b(potential,position,basis)
-    integration = tf.reshape(integration,[len(basis),1])
-    print('integration are ',integration)
+    integration = tf.reshape(integration,[args.size,1])
     coefficient = coefficient_matrix(basis,position)
-    print(coefficient)
     solution = tf.linalg.solve(coefficient, integration)
-    print(solution)
-    matrix = operator(args.c,len(basis))
-    print(matrix)
-    H = combine(solution,matrix,len(basis))
-    print(H)
+    matrix = operator(args.c,args.size)
+    H = combine(solution,matrix,args.size)
+    print('Hamiltonian is :',H)
+    e,v = tf.linalg.eigh(H)
+    print('Lowest energy state of the Hamiltonian: ',e[0])
+    print("The wavefunction's coefficient on the basis set: ",v[0])
 
 if __name__ == '__main__':
     main()

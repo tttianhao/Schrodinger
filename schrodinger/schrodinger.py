@@ -132,8 +132,25 @@ def operator(c,n):
                 start = False
             else:
                 row_i = tf.concat([row_i, matrix_ij],0)
-        row_1 = tf.concat([row_1, tf.reshape(row_i,[5,1])],1)
+        row_1 = tf.concat([row_1, tf.reshape(row_i,[n,1])],1)
     return row_1
+
+def combine(V0, coeff, n):
+    ''' This function combines the projection of V0 and the first part of the operator to get the final result
+
+    Args:
+    V0: tensor, the projection of potential energy data to basis set
+    coeff: tensor, the nxn matrix of the first part of the H
+    n: int, number of basis set
+
+    returns:
+    H: tensor, the matrix form of the hamlitonian
+    '''
+    H = V0
+    for i in range(1, n):
+        H = tf.concat([H, V0], 1)
+    H = coeff + H
+    return H
 
 def main():
     args = getParser()
@@ -151,8 +168,10 @@ def main():
     print(coefficient)
     solution = tf.linalg.solve(coefficient, integration)
     print(solution)
-    matrix = operator(1,5)
+    matrix = operator(args.c,len(basis))
     print(matrix)
+    H = combine(solution,matrix,len(basis))
+    print(H)
 
 if __name__ == '__main__':
     main()

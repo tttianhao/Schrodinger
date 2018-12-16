@@ -166,6 +166,7 @@ def main():
     integration = inner_V0_b(potential,position,basis)
     integration = tf.reshape(integration,[args.size,1])
     coefficient = coefficient_matrix(basis,position)
+    print(coefficient)
     solution = tf.linalg.solve(coefficient, integration)
     matrix = operator(args.c,args.size)
     H = combine(solution,matrix,args.size)
@@ -173,6 +174,7 @@ def main():
     e,v = tf.linalg.eigh(H)
     print('Lowest energy state of the Hamiltonian: ',e[0])
     print("The wavefunction's coefficient on the basis set: ",v[0])
+    return True
 
 if __name__ == '__main__':
     main()

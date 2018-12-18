@@ -14,7 +14,7 @@ Overview
 
 This project solves the lowest energy state and its wave function of a particle in a given potential field by Schrodinger Equation using Fourier basis set.
 
-.. image:: https://latex.codecogs.com/gif.download?%5Cinline%20%5Chat%7BH%7D%5CPsi%28x%29%20%3D%20E%5CPsi%28x%29
+.. image:: https://latex.codecogs.com/gif.latex?%5Cinline%20%5Chat%7BH%7D%5CPsi%28x%29%20%3D%20E%5CPsi%28x%29
 
 Installation
 -------

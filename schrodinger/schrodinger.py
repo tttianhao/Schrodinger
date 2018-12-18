@@ -3,7 +3,6 @@
 """Main module."""
 import tensorflow as tf
 import argparse
-import math
 tf.enable_eager_execution()
 
 def getParser():

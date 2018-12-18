@@ -44,7 +44,7 @@ setup(
     version='0.1.0',
     zip_safe=False,
     entry_points={
-        console_scripts': [
+        'console_scripts': [
               'schrodinger = schrodinger.schrodinger:main'
           ]
     },

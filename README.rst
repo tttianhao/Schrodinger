@@ -23,10 +23,36 @@ where the Hamiltonian operator on a given wave function is defined as:
 
 
 Installation
--------
+-------------
+
+Use the following command lines to install:
+
+``git clone https://github.com/tttianhao/Schrodinger.git``
+
+``cd schrodinger``
+
+``python setup.py install``
 
 Usage
 -------
 
-Features
+Inputs:
+
+* --size: 
+        * Int, The size of the fourier basis set: {1, sin(x), cos(x), sin(2x), cos(2x)...}
+        * default is 5
+
+* --c:
+        * Float, The constant in the Hamiltonian
+        * default is 1
+
+* --file:
+        * String, The path and file name of the potential energy
+        * default is schrodinger/potential_energy.dat
+        * note: please begin the first line of the data file with "#" and the first column being position, second column being potential energy.
+        * The position input has to be evenly distributed.
+TODO
 -------
+
+* Revise the Hamiltonian
+* Handle unevenly distributed position Inputs

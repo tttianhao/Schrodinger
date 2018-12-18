@@ -7,7 +7,7 @@ tf.enable_eager_execution()
 
 def getParser():
     #Using parser to take in user in put form termial.
-    #The default command is:
+    #The default command is: schrodinger --c 1 --size 5 --file schrodinger/potential_energy.dat
     parser = argparse.ArgumentParser()
     parser.add_argument('--c', type = float, default = 1, help = 'constant c, default = 1' )
     parser.add_argument('--size', type = int, default = 5, help = 'size of the basis set, default = 5' )
@@ -165,7 +165,7 @@ def main():
     integration = inner_V0_b(potential,position,basis)
     integration = tf.reshape(integration,[args.size,1])
     coefficient = coefficient_matrix(basis,position)
-    print(coefficient)
+    #print(coefficient)
     solution = tf.linalg.solve(coefficient, integration)
     matrix = operator(args.c,args.size)
     H = combine(solution,matrix,args.size)

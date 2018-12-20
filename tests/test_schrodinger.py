@@ -105,8 +105,23 @@ class Testworkshop(unittest.TestCase):
             expected = tf.constant(i,dtype=tf.float32,shape=())
             self.assertTrue(tf.equal(expected, result[i][0]))
 
+    def test_checkdomain(self):
+        V0 = [0,1,2,3,4,5]
+        x = [0,1,2,3,4,5]
+        domain = '2,4'
+        potential, position = schrodinger.check_domain(V0,x,domain)
+        self.assertEqual(potential,[2,3,4])
+        self.assertEqual(position,[2,3,4])
+        domain = '0.5,4.5'
+        potential, position = schrodinger.check_domain(V0,x,domain)
+        self.assertEqual(potential,[1,2,3,4])
+        self.assertEqual(position,[1,2,3,4])
+
     def test_main(self):
-        self.assertTrue(schrodinger.main())
+        H, value, vector = schrodinger.main()
+        five = tf.constant(5, dtype=tf.int32)
+        self.assertTrue(tf.equal(tf.shape(H)[0],five))
+        self.assertTrue(tf.equal(tf.shape(vector)[0],five))
         
 if __name__ == '__main__':
     unittest.main()

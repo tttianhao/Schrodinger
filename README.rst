@@ -17,7 +17,11 @@ The Schrodinger Equation is:
 
 .. image:: https://latex.codecogs.com/gif.latex?%5Cinline%20%5Chat%7BH%7D%5CPsi%28x%29%20%3D%20E%5CPsi%28x%29
 
-where the Hamiltonian operator on a given wave function is defined as:
+where H is an operator that maps L2 to L2 and the inner product on L2 space is defined as:
+
+.. image:: https://latex.codecogs.com/gif.latex?%3Cf%28x%29%7Cg%28x%29%3E%20%5C%20%3D%5Cint%20%7Bf%28x%29%5Cbar%20%7Bg%28x%29%7D%20dx%7D
+
+the Hamiltonian operator on a given wave function is defined as:
 
 .. image:: https://latex.codecogs.com/gif.latex?%5Cinline%20%5Chat%20H%20%5CPsi%28x%29%3D%20-c%5Cnabla%5E2%5CPsi%28x%29&plus;V_0%28x%29
 

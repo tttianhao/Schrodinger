@@ -12,7 +12,7 @@ def getParser():
     parser.add_argument('--c', type = float, default = 1, help = 'constant c, default = 1' )
     parser.add_argument('--size', type = int, default = 5, help = 'size of the basis set, default = 5' )
     parser.add_argument('--file', type = str, default = 'schrodinger/potential_energy.dat', help = 'name of your potential energy file')
-    parser.add_argument('--domain', type = str, default = None, help = 'domain, an optional parameter, default = the domain of potential energy data' )
+    parser.add_argument('--domain', type = str, default = None, help = "domain: in the format of 'low,high' (seperate by a comma), an optional parameter, default = the domain of potential energy data" )
     args = parser.parse_args()
     return args
 
@@ -169,7 +169,7 @@ def check_domain(potential, position, domain):
     new_V0 = []
     new_x = []
     for i in range(len(position)):
-        if position[i] > low and position[i] < high:
+        if position[i] >= low and position[i] <= high:
             new_x.append(position[i])
             new_V0.append(potential[i])
     return new_V0, new_x
@@ -208,4 +208,4 @@ def main():
     return H, e[0], v[0]
 
 if __name__ == '__main__':
-    main()
+    main() # pragma: no cover

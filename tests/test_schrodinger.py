@@ -116,6 +116,10 @@ class Testworkshop(unittest.TestCase):
         potential, position = schrodinger.check_domain(V0,x,domain)
         self.assertEqual(potential,[1,2,3,4])
         self.assertEqual(position,[1,2,3,4])
+        with pytest.raises(ValueError) as e:
+            domain = '0.5,120'
+            schrodinger.check_domain(V0,x,domain)
+        self.assertEqual(str(e.value), 'Check your domain input. It should be strickly within the range of position data')
 
     def test_main(self):
         H, value, vector = schrodinger.main()

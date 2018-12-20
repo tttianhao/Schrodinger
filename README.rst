@@ -48,9 +48,15 @@ Inputs:
 
 * --file:
         * String, The path and file name of the potential energy
-        * default is schrodinger/potential_energy.dat
+        * optinal argument, default is schrodinger/potential_energy.dat
         * note: please begin the first line of the data file with "#" and the first column being position, second column being potential energy.
         * The position input has to be evenly distributed.
+
+* --domain:
+        * String, the domain of position
+        * default is the domain of the input position data
+        * note: please input the domain in the format of 'a,b' (seperate lower and upper bound by comma)
+        * The domain input has to be within the range of position data
 TODO
 -------
 
